@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/activity_google_map_rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@color/title_bar_bg" >
+
+        <Button
+            android:id="@+id/activity_google_map_btn_location"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
+            android:background="@drawable/title_btn_bg"
+            android:text="fix" />
+
+        <ImageView
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/activity_google_map_btn_location"
+            android:background="@color/title_bar_split_line" />
+
+        <Button
+            android:id="@+id/activity_google_map_btn_add_mark"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/title_btn_bg"
+            android:text="mark" />
+
+        <ImageView
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/activity_google_map_btn_add_mark"
+            android:background="@color/title_bar_split_line" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/activity_google_map_iv_titlebottom"
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:layout_below="@id/activity_google_map_rl_title"
+        android:background="@color/title_bar_split_line" />
+
+    <ViewStub
+        android:id="@+id/activity_google_map_vs_gmap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/activity_google_map_iv_titlebottom"
+        android:clickable="true" />
+
+</RelativeLayout>

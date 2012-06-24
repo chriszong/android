@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/marker_info_pop_bg"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="7dip" >
+
+    <ImageView
+        android:id="@+id/view_map_marker_pop_iv_pic"
+        android:layout_width="80dip"
+        android:layout_height="65dip"
+        android:layout_marginRight="5dip" />
+
+    <TextView
+        android:id="@+id/view_map_marker_pop_tv_infotext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/view_map_marker_pop_iv_pic"
+        android:singleLine="true"
+        android:text="@string/text_marker_detail"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+
+</RelativeLayout>
