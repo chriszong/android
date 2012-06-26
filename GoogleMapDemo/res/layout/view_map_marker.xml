@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="30dip"
-    android:background="#00000000" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/view_map_marker_btn_marker"
+    <TextView
+        android:id="@+id/view_map_marker_tv_marker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:background="@drawable/marking"
-        android:gravity="center_horizontal"
-        android:paddingTop="5dp"
+        android:gravity="center"
+        android:paddingBottom="11dip"
         android:singleLine="true"
         android:text="@string/text_marker"
         android:textColor="#FFFFFF" />
 
-</LinearLayout>
+</RelativeLayout>

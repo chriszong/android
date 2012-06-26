@@ -13,6 +13,9 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anjuke.gmap.R;
 import com.anjuke.gmap.model.StaticValue;
@@ -35,18 +38,17 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     private View mPopView;
     private final static int POPWIDTH = 280;// 弹出窗宽
     private final static int POPHEIGHT = 80;// 弹出窗高
-    private final static int MARKERHEIGHT = 0;// 弹出窗距离 标点高度
+    private final static int MARKERHEIGHT = 50;// 弹出窗距离 标点高度
     private final static int POPPADDING = 10;// 弹出窗距离屏幕边框的padding
 
     private ArrayList<OverlayItem> mOverlayItemList = new ArrayList<OverlayItem>();
     private ArrayList<View> mBottomViewList = new ArrayList<View>();// 记录地图标点下方的view列表
 
     private Point mScreanP = new Point();
-    private Paint mPaint = new Paint();
     private MyLocationMarkOverlay mMyLocationMarkOverlay;
 
     public LocationsItemizedOverlay(Drawable defaultMarker, Context context, MapView mapView, MyLocationMarkOverlay myLocationMarkOverlay) {
-        super(defaultMarker);
+        super(boundCenterBottom(defaultMarker));
         // TODO Auto-generated constructor stub
 
         mContext = context;
@@ -57,7 +59,7 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         mPopView.setVisibility(View.GONE);
         mMapView.addView(mPopView);
 
-        mMarkerView = View.inflate(mContext, R.layout.view_map_marker, null);
+        mMarkerView = View.inflate(mContext, R.layout.view_map_marker_marked, null);
         mMarkerView.setVisibility(View.GONE);
         mMapView.addView(mMarkerView);
 
@@ -80,9 +82,9 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     public void draw(Canvas canvas, MapView mapView, boolean shadow) {
         // TODO Auto-generated method stub
 
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setFilterBitmap(true);
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setFilterBitmap(true);
 
         for (int i = 0; i < mBottomViewList.size(); i++) {
             try {
@@ -94,20 +96,20 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                 GeoPoint geo = overlayitem.getPoint();
                 Projection projettion = mMapView.getProjection();
                 projettion.toPixels(geo, mScreanP);
-                canvas.drawBitmap(temp, mScreanP.x - temp.getWidth() / 2, mScreanP.y - temp.getHeight(), mPaint);
+                canvas.drawBitmap(temp, mScreanP.x - temp.getWidth() / 2, mScreanP.y - temp.getHeight(), paint);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+        shadow = false;
         super.draw(canvas, mapView, shadow);
     }
 
     @Override
     public boolean onTap(GeoPoint p, MapView mapView) {
         boolean tapped = super.onTap(p, mapView);
-        if (tapped) {
-
-        } else {
+        if (!tapped) {
             mPopView.setVisibility(View.GONE);
             mMarkerView.setVisibility(View.GONE);
         }
@@ -122,9 +124,10 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
         String strGeoData = item.getSnippet();
         String[] geodata = strGeoData.split(";");
 
-        if (geodata.length == 2) {
+        if (geodata.length == 3) {
             String slat = geodata[0];
             String slng = geodata[1];
+            String markerText = geodata[2];
 
             try {
                 int dlat = Integer.parseInt(slat);
@@ -145,6 +148,21 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
                 mMarkerView.bringToFront();
                 mMarkerView.setVisibility(View.VISIBLE);
+
+                TextView tvMarker = (TextView) mMarkerView.findViewById(R.id.view_map_marker_marked_tv_marker);
+                tvMarker.setText(markerText);
+                tvMarker.setBackgroundResource(R.drawable.marking);
+
+                mPopView.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(mContext, "jump to detail page", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                mPopView.bringToFront();
+                mPopView.setVisibility(View.VISIBLE);
             } catch (Exception e) {
                 // TODO: handle exception
             }
@@ -188,23 +206,24 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
         protected void onPostExecute(GeoPoint geoPoint) {
             if (geoPoint != null) {
-                String geoData = String.valueOf(geoPoint.getLatitudeE6()) + ";" + String.valueOf(geoPoint.getLatitudeE6());
+                String markerText = "M" + StaticValue.sListGeo.size();
+                String geoData = String.valueOf(geoPoint.getLatitudeE6()) + ";" + String.valueOf(geoPoint.getLongitudeE6()) + ";" + markerText;
                 OverlayItem overlayitem = new OverlayItem(geoPoint, null, geoData);
                 addOverlay(overlayitem);
 
                 View pointButtomView = View.inflate(mContext, R.layout.view_map_marker_marked, null);
-                pointButtomView.setVisibility(View.INVISIBLE);
+                pointButtomView.setVisibility(View.VISIBLE);
                 pointButtomView.setDrawingCacheEnabled(true);
                 MapView.LayoutParams pointButtomLayout = new MapView.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, geoPoint, 0, 0, MapView.LayoutParams.BOTTOM_CENTER);
-                // Button btnMarker = (Button) pointButtomView.findViewById(R.id.view_map_marker_marked_btn_marker);
-                // btnMarker.setText("data string");
+                TextView tvMarker = (TextView) pointButtomView.findViewById(R.id.view_map_marker_marked_tv_marker);
+                tvMarker.setText(markerText);
+                pointButtomView.setBackgroundResource(R.drawable.marked);
                 mMapView.addView(pointButtomView, pointButtomLayout);
                 pointButtomView.setTag(overlayitem);
                 mBottomViewList.add(pointButtomView);
                 mMyLocationMarkOverlay.hideMarkerView();
             }
         }
-
     }
 
     private void setGeoLPxy(MapView.LayoutParams popViewLayoutParams) {

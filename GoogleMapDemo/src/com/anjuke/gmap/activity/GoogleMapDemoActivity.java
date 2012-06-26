@@ -73,7 +73,7 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
         mMapController.setCenter(geoPoint);
         mMapController.setZoom(17);
 
-        Drawable drawable = this.getResources().getDrawable(R.drawable.selector_marker);
+        Drawable drawable = this.getResources().getDrawable(R.drawable.marked);
         mMyLocationMarkOverlay = new MyLocationMarkOverlay(GoogleMapDemoActivity.this, mMapView);
         mItemizedoverlay = new LocationsItemizedOverlay(drawable, GoogleMapDemoActivity.this, mMapView, mMyLocationMarkOverlay);
 
