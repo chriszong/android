@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.anjuke.gmap.R;
 import com.anjuke.gmap.mapoverlay.LocationsItemizedOverlay;
 import com.anjuke.gmap.mapoverlay.MyLocationMarkOverlay;
+import com.anjuke.gmap.mapoverlay.RouteOverLay;
 import com.anjuke.gmap.model.StaticValue;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -25,9 +26,11 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
     private Button mBtnFix;
     private Button mBtnMark;
     private MapController mMapController;
+    private Boolean mIfRoute = false;
 
     private LocationsItemizedOverlay mItemizedoverlay;
     private MyLocationMarkOverlay mMyLocationMarkOverlay;
+    private RouteOverLay mOverlay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,16 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
 
         initMapView();
         initBtns();
+    }
+
+    @Override
+    protected void onResume() {
+        if (StaticValue.sIfMapMarkerEditModel) {
+            mBtnMark.setText("Done");
+        } else {
+            mBtnMark.setText("Mark");
+        }
+        super.onResume();
     }
 
     protected void onPause() {
@@ -49,12 +62,7 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
         mBtnFix = (Button) findViewById(R.id.activity_google_map_btn_location);
         mBtnMark = (Button) findViewById(R.id.activity_google_map_btn_add_mark);
 
-        if (StaticValue.sIfMapMarkerEditModel) {
-            mBtnMark.setText("Done");
-        } else {
-            mBtnMark.setText("Mark");
-        }
-
+        mBtnFix.setOnClickListener(this);
         mBtnMark.setOnClickListener(this);
     }
 
@@ -112,7 +120,20 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
 
             break;
         case R.id.activity_google_map_btn_location:
-
+            mIfRoute = !mIfRoute;
+            if (mIfRoute) {
+                mBtnFix.setText("End");
+                if (StaticValue.sListGeo == null) {
+                    StaticValue.sListGeo = new ArrayList<GeoPoint>();
+                }
+                mOverlay = new RouteOverLay(StaticValue.sListGeo);
+                mMapView.getOverlays().add(mOverlay);
+                mMapView.invalidate();
+            } else {
+                mBtnFix.setText("Route");
+                mMapView.getOverlays().remove(mOverlay);
+                mMapView.invalidate();
+            }
             break;
 
         default:
