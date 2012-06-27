@@ -4,6 +4,6 @@
     <string name="hello">Hello World, GoogleMapDemoActivity!</string>
     <string name="app_name">GoogleMapDemo</string>
     <string name="text_marker_detail">Marker Detail</string>
-    <string name="text_marker">Marker</string>
+    <string name="text_marker">M</string>
 
 </resources>

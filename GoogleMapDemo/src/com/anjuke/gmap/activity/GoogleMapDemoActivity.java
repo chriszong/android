@@ -23,7 +23,7 @@ import com.google.android.maps.MapView;
 public class GoogleMapDemoActivity extends MapActivity implements OnClickListener {
 
     private MapView mMapView;
-    private Button mBtnFix;
+    private Button mBtnRoute;
     private Button mBtnMark;
     private MapController mMapController;
     private Boolean mIfRoute = false;
@@ -59,10 +59,10 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
     }
 
     private void initBtns() {
-        mBtnFix = (Button) findViewById(R.id.activity_google_map_btn_location);
+        mBtnRoute = (Button) findViewById(R.id.activity_google_map_btn_route);
         mBtnMark = (Button) findViewById(R.id.activity_google_map_btn_add_mark);
 
-        mBtnFix.setOnClickListener(this);
+        mBtnRoute.setOnClickListener(this);
         mBtnMark.setOnClickListener(this);
     }
 
@@ -107,6 +107,7 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
                     }
                     StaticValue.sListGeo.add(StaticValue.sMarkerGeo);
                     mItemizedoverlay.loadNewData();
+                    StaticValue.sMarkerGeo = null;
                 }
 
                 mMapView.getOverlays().remove(mMyLocationMarkOverlay);
@@ -119,10 +120,10 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
             }
 
             break;
-        case R.id.activity_google_map_btn_location:
+        case R.id.activity_google_map_btn_route:
             mIfRoute = !mIfRoute;
             if (mIfRoute) {
-                mBtnFix.setText("End");
+                mBtnRoute.setText("End");
                 if (StaticValue.sListGeo == null) {
                     StaticValue.sListGeo = new ArrayList<GeoPoint>();
                 }
@@ -130,7 +131,7 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
                 mMapView.getOverlays().add(mOverlay);
                 mMapView.invalidate();
             } else {
-                mBtnFix.setText("Route");
+                mBtnRoute.setText("Route");
                 mMapView.getOverlays().remove(mOverlay);
                 mMapView.invalidate();
             }

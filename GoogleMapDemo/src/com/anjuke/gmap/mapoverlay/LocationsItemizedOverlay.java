@@ -36,10 +36,10 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
     private View mMarkerView;
     /** 标点详细内容浮框 */
     private View mPopView;
-    private final static int POPWIDTH = 280;// 弹出窗宽
-    private final static int POPHEIGHT = 80;// 弹出窗高
-    private final static int MARKERHEIGHT = 50;// 弹出窗距离 标点高度
-    private final static int POPPADDING = 10;// 弹出窗距离屏幕边框的padding
+    private final static int POPWIDTH = 280;// 浮框宽
+    private final static int POPHEIGHT = 80;// 浮框高
+    private final static int MARKERHEIGHT = 55;// 浮框距离 标点高度
+    private final static int POPPADDING = 10;// 浮框距离屏幕边框的padding
 
     private ArrayList<OverlayItem> mOverlayItemList = new ArrayList<OverlayItem>();
     private ArrayList<View> mBottomViewList = new ArrayList<View>();// 记录地图标点下方的view列表
@@ -134,8 +134,7 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                 int dlng = Integer.parseInt(slng);
                 GeoPoint geoPoint = new GeoPoint(dlat, dlng);
 
-                MapView.LayoutParams popViewLayoutParams = new MapView.LayoutParams(CommonUtil.dip2px(mContext, POPWIDTH), CommonUtil.dip2px(mContext, POPHEIGHT), geoPoint,
-                        MapView.LayoutParams.BOTTOM_CENTER);
+                MapView.LayoutParams popViewLayoutParams = new MapView.LayoutParams(CommonUtil.dip2px(mContext, POPWIDTH), CommonUtil.dip2px(mContext, POPHEIGHT), geoPoint, MapView.LayoutParams.BOTTOM_CENTER);
                 popViewLayoutParams.mode = MapView.LayoutParams.MODE_VIEW;// 使用屏幕坐标来显示view模式
                 popViewLayoutParams.point = geoPoint;
 
