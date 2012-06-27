@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.anjuke.gmap.R;
 import com.anjuke.gmap.model.StaticValue;
-import com.anjuke.gmap.util.CommonUtil;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MapView.LayoutParams;
