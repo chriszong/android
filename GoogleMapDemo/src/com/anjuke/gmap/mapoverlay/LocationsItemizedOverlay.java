@@ -94,8 +94,8 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 
                 OverlayItem overlayitem = (OverlayItem) tempView.getTag();
                 GeoPoint geo = overlayitem.getPoint();
-                Projection projettion = mMapView.getProjection();
-                projettion.toPixels(geo, mScreanP);
+                Projection projection = mMapView.getProjection();
+                projection.toPixels(geo, mScreanP);
                 canvas.drawBitmap(temp, mScreanP.x - temp.getWidth() / 2, mScreanP.y - temp.getHeight(), paint);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -208,6 +208,10 @@ public class LocationsItemizedOverlay extends ItemizedOverlay<OverlayItem> {
                 String markerText = "M" + StaticValue.sListGeo.size();
                 String geoData = String.valueOf(geoPoint.getLatitudeE6()) + ";" + String.valueOf(geoPoint.getLongitudeE6()) + ";" + markerText;
                 OverlayItem overlayitem = new OverlayItem(geoPoint, null, geoData);
+
+                // Drawable marker = mContext.getResources().getDrawable(R.drawable.marked);
+                // marker.setBounds(-marker.getIntrinsicWidth() / 2, -marker.getIntrinsicHeight(), marker.getIntrinsicWidth() / 2, 0);
+                // overlayitem.setMarker(marker);
                 addOverlay(overlayitem);
 
                 View pointButtomView = View.inflate(mContext, R.layout.view_map_marker_marked, null);
