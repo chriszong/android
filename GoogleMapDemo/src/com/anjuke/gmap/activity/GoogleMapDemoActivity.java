@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 
 import com.anjuke.gmap.R;
+import com.anjuke.gmap.mapoverlay.AnimationRouteOverlay;
 import com.anjuke.gmap.mapoverlay.LocationsItemizedOverlay;
 import com.anjuke.gmap.mapoverlay.MyLocationMarkOverlay;
 import com.anjuke.gmap.mapoverlay.RouteOverLay;
@@ -31,6 +32,7 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
     private LocationsItemizedOverlay mItemizedoverlay;
     private MyLocationMarkOverlay mMyLocationMarkOverlay;
     private RouteOverLay mOverlay;
+    private AnimationRouteOverlay mARoutOverlay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,9 +132,18 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
                 mOverlay = new RouteOverLay(StaticValue.sListGeo);
                 mMapView.getOverlays().add(mOverlay);
                 mMapView.invalidate();
+                
+                mARoutOverlay = new AnimationRouteOverlay(GoogleMapDemoActivity.this, mMapView, StaticValue.sListGeo);
+                mMapView.getOverlays().add(mARoutOverlay);
+                mMapView.invalidate();
+
             } else {
                 mBtnRoute.setText("Route");
                 mMapView.getOverlays().remove(mOverlay);
+                mMapView.invalidate();
+                
+                mARoutOverlay.clearView();
+                mMapView.getOverlays().remove(mARoutOverlay);
                 mMapView.invalidate();
             }
             break;
