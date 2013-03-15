@@ -63,7 +63,6 @@ public class GoogleMapDemoActivity extends MapActivity implements OnClickListene
     private void initBtns() {
         mBtnRoute = (Button) findViewById(R.id.activity_google_map_btn_route);
         mBtnMark = (Button) findViewById(R.id.activity_google_map_btn_add_mark);
-
         mBtnRoute.setOnClickListener(this);
         mBtnMark.setOnClickListener(this);
     }
