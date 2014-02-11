@@ -4,5 +4,6 @@
     <string name="app_name">MapBaseLibProject</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="google_map_key">AIzaSyCU6uwzx0ZoLmTMoEgXVxEqvSvuEqRLOdY</string>
 
 </resources>
