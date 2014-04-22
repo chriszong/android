@@ -4,6 +4,9 @@
   android:versionCode="5"
   android:versionName="2.6.0">
   <!-- Copied from Google Maps Library/AndroidManifest.xml. -->
+
+
+
   <uses-sdk
     android:minSdkVersion="9"
     android:targetSdkVersion="17"/>
